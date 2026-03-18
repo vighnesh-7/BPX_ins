@@ -11,7 +11,7 @@ def create_claim(db: Session, claim: ClaimCreate) -> Claim:
         claimant_name=claim.claimant_name,
         incident_type=claim.incident_type,
         incident_description=claim.incident_description,
-        # bank_details=claim.bank_details,
+        bank_details=claim.bank_details,
         claiming_amt=claim.claiming_amt,
         # incident_date=claim.incident_date,
         status="submitted"

@@ -8,6 +8,7 @@ class ClaimBase(BaseModel):
     incident_type: str
     incident_description: str
     # incident_date: Optional[date] = Field(default=None, description="Date of the incident")
+    bank_details: Optional[str] = None
     claiming_amt : float 
 
 class ClaimCreate(ClaimBase):
@@ -18,6 +19,13 @@ class ClaimOut(ClaimBase):
     status: str
     confidence_score: float
     settlement_amount: float
+    
+    # LangGraph Output States
+    document_valid: bool
+    fraud_score: Optional[float] = None
+    medical_summary: Optional[str] = None
+    policy_valid: bool
+    
     created_at: datetime
 
     class Config:
