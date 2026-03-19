@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BPX Claims Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <h1>BPX Claims</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="index.html" class="nav-link active">Claims</a></li>
+                <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h2>Manage Your Insurance Claims</h2>
+            <p>Submit and track your claims with our AI-powered processing system</p>
+        </div>
+
+        <div class="content-grid">
+            <!-- Left Column: Claim Form -->
+            <div class="form-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Submit New Claim</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="claimForm" class="claim-form">
+                            <div class="form-group">
+                                <label for="policyNumber">Policy Number *</label>
+                                <input
+                                    type="text"
+                                    id="policyNumber"
+                                    name="policy_number"
+                                    placeholder="e.g., POL-2024-001"
+                                    required
+                                    class="form-input"
+                                >
+                                <span class="error-message" id="policyNumberError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="claimantName">Claimant Name *</label>
+                                <input
+                                    type="text"
+                                    id="claimantName"
+                                    name="claimant_name"
+                                    placeholder="Full name"
+                                    required
+                                    class="form-input"
+                                >
+                                <span class="error-message" id="claimantNameError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="incidentType">Incident Type *</label>
+                                <select id="incidentType" name="incident_type" required class="form-input">
+                                    <option value="">Select incident type</option>
+                                    <option value="medical">Medical</option>
+                                    <option value="accident">Accident</option>
+                                    <option value="theft">Theft</option>
+                                    <option value="property_damage">Property Damage</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <span class="error-message" id="incidentTypeError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="incidentDescription">Incident Description *</label>
+                                <textarea
+                                    id="incidentDescription"
+                                    name="incident_description"
+                                    placeholder="Describe the incident in detail..."
+                                    required
+                                    rows="4"
+                                    class="form-textarea"
+                                ></textarea>
+                                <span class="error-message" id="descriptionError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="claimingAmount">Claiming Amount ($) *</label>
+                                <input
+                                    type="number"
+                                    id="claimingAmount"
+                                    name="claiming_amt"
+                                    placeholder="0.00"
+                                    step="0.01"
+                                    min="0"
+                                    required
+                                    class="form-input"
+                                >
+                                <span class="error-message" id="amountError"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
+                                Submit Claim
+                            </button>
+                        </form>
+                        <div id="submitMessage" class="alert" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Claims List -->
+            <div class="claims-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Your Claims</h3>
+                        <button class="btn btn-sm btn-secondary" id="refreshClaimsBtn">Refresh</button>
+                    </div>
+                    <div class="card-body">
+                        <!-- Tabs for Status Filtering -->
+                        <div class="tabs">
+                            <div class="tab-buttons">
+                                <button class="tab-btn active" data-status="all">All</button>
+                                <button class="tab-btn" data-status="submitted">Submitted</button>
+                                <button class="tab-btn" data-status="processing">Processing</button>
+                                <button class="tab-btn" data-status="human_review">In Review</button>
+                                <button class="tab-btn" data-status="approved">Approved</button>
+                                <button class="tab-btn" data-status="rejected">Rejected</button>
+                            </div>
+                        </div>
+
+                        <!-- Claims List Container -->
+                        <div id="claimsList" class="claims-list">
+                            <div class="loading">Loading claims...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Processing Flow Section -->
+                <div class="card" style="margin-top: 24px;">
+                    <div class="card-header">
+                        <h3>Processing Pipeline</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="processingFlow" class="processing-flow">
+                            <div class="flow-stage">
+                                <div class="flow-stage-number">1</div>
+                                <div class="flow-stage-content">
+                                    <div class="flow-stage-name">Intake</div>
+                                    <div class="flow-stage-status pending">Pending</div>
+                                </div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-stage">
+                                <div class="flow-stage-number">2</div>
+                                <div class="flow-stage-content">
+                                    <div class="flow-stage-name">Document Validation</div>
+                                    <div class="flow-stage-status pending">Pending</div>
+                                </div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-stage">
+                                <div class="flow-stage-number">3</div>
+                                <div class="flow-stage-content">
+                                    <div class="flow-stage-name">Fraud Detection</div>
+                                    <div class="flow-stage-status pending">Pending</div>
+                                </div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-stage">
+                                <div class="flow-stage-number">4</div>
+                                <div class="flow-stage-content">
+                                    <div class="flow-stage-name">Medical Review</div>
+                                    <div class="flow-stage-status pending">Pending</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Claim Details -->
+    <div id="claimModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Claim Details</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Details will be populated here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="closeModalBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

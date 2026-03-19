@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BPX Claims Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <h1>BPX Claims</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="index.html" class="nav-link">Claims</a></li>
+                <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h2>Dashboard</h2>
+            <p>Overview of all claims and processing statistics</p>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="dashboard-grid">
+            <div class="stat-card submitted">
+                <div class="stat-card-label">Submitted</div>
+                <div class="stat-card-value" id="submittedCount">0</div>
+                <div class="stat-card-trend">New claims waiting processing</div>
+            </div>
+            <div class="stat-card processing">
+                <div class="stat-card-label">Processing</div>
+                <div class="stat-card-value" id="processingCount">0</div>
+                <div class="stat-card-trend">Claims in pipeline</div>
+            </div>
+            <div class="stat-card review">
+                <div class="stat-card-label">In Review</div>
+                <div class="stat-card-value" id="reviewCount">0</div>
+                <div class="stat-card-trend">Awaiting human review</div>
+            </div>
+            <div class="stat-card approved">
+                <div class="stat-card-label">Approved</div>
+                <div class="stat-card-value" id="approvedCount">0</div>
+                <div class="stat-card-trend">Claims approved</div>
+            </div>
+            <div class="stat-card rejected">
+                <div class="stat-card-label">Rejected</div>
+                <div class="stat-card-value" id="rejectedCount">0</div>
+                <div class="stat-card-trend">Claims rejected</div>
+            </div>
+        </div>
+
+        <!-- Claims Table -->
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3>All Claims</h3>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search by claim ID, policy number..."
+                        class="form-input"
+                        style="max-width: 300px; margin: 0;"
+                    >
+                    <button class="btn btn-secondary" id="refreshDashboardBtn">Refresh</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-container">
+                    <table id="claimsTable">
+                        <thead>
+                            <tr>
+                                <th>Claim ID</th>
+                                <th>Policy Number</th>
+                                <th>Claimant Name</th>
+                                <th>Incident Type</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Confidence</th>
+                                <th>Settlement</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr>
+                                <td colspan="10" style="text-align: center; padding: 40px;">
+                                    <div class="loading">Loading claims...</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Claim Details -->
+    <div id="claimDetailsModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="detailsModalTitle">Claim Details</h3>
+                <button class="modal-close" id="closeDetailsModal">&times;</button>
+            </div>
+            <div class="modal-body" id="detailsModalBody">
+                <!-- Details will be populated here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="closeDetailsModalBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
